@@ -2,47 +2,47 @@ import streamlit as st
 
 def page_summary_body():
 
-    st.write("### Quick Project Summary")
+    st.write("### Project Summary")
 
     # text based on README file - "Dataset Content" section
     st.info(
 
-        f"**Project Dataset**\n"
+        f"**Project Dataset**:\n"
         f"The dataset represents anonymized patient data collected from five different hospitals: "
-        f"Cleveland, Hungarian, Switzerland, Long Beach, and Stalog.\n\n"
+        f"Budapest, Zurich, Basel, Long Beach and Cleveland.\n\n"
 
         f"**Project Terms & Jargon**\n\n"
-        f"**Chest Pain type**: Describes the patient's chest pain and can be categorized as follows:\n"
-        f"- **Typical angina (TA)**: Chest pain or discomfort caused by reduced oxygen-rich blood flow to the heart muscle.\n\n"
-        f"- **Atypical angina (ATA)**: Chest pain or discomfort with symptoms not typical of angina pectoris.\n\n"
-        f"- **Non-anginal pain (NAP)**: Chest pain or discomfort unrelated to angina or heart-related issues.\n\n"
-        f"- **Asymptomatic (ASY)**: A condition where a person does not exhibit any noticeable symptoms.\n\n"
+        f"**Chest Pain type**: describes the patient's chest pain and can be categorized as follows:\n"
+        f"- **Typical angina (TA)**: chest pain or discomfort caused by reduced oxygen-rich blood flow to the heart muscle.\n\n"
+        f"- **Atypical angina (ATA)**: chest pain or discomfort with symptoms not typical of angina pectoris.\n\n"
+        f"- **Non-anginal pain (NAP)**: chest pain or discomfort unrelated to angina or heart-related issues.\n\n"
+        f"- **Asymptomatic (ASY)**: a condition where a person does not exhibit any noticeable symptoms.\n\n"
 
-        f"**RestingBP**: Refers to the measurement of blood pressure when a person is at rest, measured in mm Hg.\n\n"
+        f"**RestingBP**: refers to the measurement of blood pressure when a person is at rest, measured in mm Hg.\n\n"
 
-        f"**Cholesterol**: Serum cholesterol level measured in mm/dl.\n\n"
+        f"**Cholesterol**: serum cholesterol level measured in mm/dl.\n\n"
 
-        f"**FastingBS**: Blood sugar levels during fasting:\n\n"
+        f"**FastingBS**: blood sugar levels during fasting:\n\n"
         f" - 1: FastingBS > 120 mg/dl\n\n"
         f" - 0: FastingBS <= 120 mg/dl\n\n"
 
-        f"**RestingECG**: Result of resting electrocardiogram (ECG), values are:\n\n"
+        f"**RestingECG**: result of resting electrocardiogram (ECG), values are:\n\n"
         f" - **Normal**\n\n"
-        f" - **ST**: Represents the ST segment in an ECG.\n\n"
-        f" - **LVH**: Left ventricular hypertrophy, indicating thickening or enlargement of the muscular wall of the left ventricle.\n\n"
+        f" - **ST**: represents the ST segment in an ECG.\n\n"
+        f" - **LVH**: left ventricular hypertrophy, indicating thickening or enlargement of the muscular wall of the left ventricle.\n\n"
 
-        f"**MaxHR**: Maximum heart rate achieved in bpm.\n\n"
+        f"**MaxHR**: maximum heart rate achieved in bpm.\n\n"
 
-        f"**ExerciseAngina**: Describes if the patient is affected by angina pectoris after physical exercise (Y: yes, N: no).\n\n"
+        f"**ExerciseAngina**: describes if the patient is affected by angina pectoris after physical exercise (Y: yes, N: no).\n\n"
 
-        f"**Oldpeak**: Measures the ST segment depression observed on an electrocardiogram (ECG) during exercise.\n\n"
+        f"**Oldpeak**: measures the ST segment depression observed on an electrocardiogram (ECG) during exercise.\n\n"
 
-        f"**ST_slope**: Indicates the slope of the ST segment during exercise, categorized as:\n"
-        f"  - **Up**: Upsloping\n\n"
-        f"  - **Flat**: Flat\n\n"
-        f"  - **Down**: Downsloping\n\n"
+        f"**ST_slope**: indicates the slope of the ST segment during exercise, categorized as:\n"
+        f"  - **Up**: upsloping\n\n"
+        f"  - **Flat**: flat\n\n"
+        f"  - **Down**: downsloping\n\n"
 
-        f"**HeartDisease**: Represents if a patient has been affected by a myocardial infarction:\n"
+        f"**HeartDisease**: represents if a patient has been affected by a myocardial infarction:\n"
         f" - 1: Patient is affected\n\n"
         f" - 0: Patient is not affected\n\n"
     )
