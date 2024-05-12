@@ -19,12 +19,49 @@ def page_hearth_risk_analysis_body():
 
     st.write("### Prospect Churnometer Interface")
     st.info(
-        f"* The client is interested in determining whether it possible to predict if a patient is "
+        f"The client is interested in determining whether it possible to predict if a patient is "
         f"at high risk of having a myocordial infarction \n\n"
         f"Based on the most relevant features the practicioner decides which analysis perform on each patient \n\n "
         f"Furthermore patients at high risk of myocardial infarction will undergo to a specific therapy "
     )
     st.write("---")
+    st.write("### Legend")
+    st.info(
+        f"**Age**: age of the patient \n\n" 
+        f"**Sex**: **M** for male, **F** for female \n\n"
+        f"**Chest Pain type**: describes the patient's chest pain and can be categorized as follows:\n"
+        f"- **Typical angina (TA)**: chest pain or discomfort caused by reduced oxygen-rich blood flow to the heart muscle.\n\n"
+        f"- **Atypical angina (ATA)**: chest pain or discomfort with symptoms not typical of angina pectoris.\n\n"
+        f"- **Non-anginal pain (NAP)**: chest pain or discomfort unrelated to angina or heart-related issues.\n\n"
+        f"- **Asymptomatic (ASY)**: a condition where a person does not exhibit any noticeable symptoms.\n\n"
+
+        f"**RestingBP**: refers to the measurement of blood pressure when a person is at rest, measured in mm Hg.\n\n"
+
+        f"**Cholesterol**: serum cholesterol level measured in mm/dl.\n\n"
+
+        f"**FastingBS**: blood sugar levels during fasting:\n\n"
+        f" - 1: FastingBS > 120 mg/dl\n\n"
+        f" - 0: FastingBS <= 120 mg/dl\n\n"
+
+        f"**RestingECG**: result of resting electrocardiogram (ECG), values are:\n\n"
+        f" - **Normal**\n\n"
+        f" - **ST**: represents the ST segment in an ECG.\n\n"
+        f" - **LVH**: left ventricular hypertrophy, indicating thickening or enlargement of the muscular wall of the left ventricle.\n\n"
+
+        f"**MaxHR**: maximum heart rate achieved in bpm.\n\n"
+
+        f"**ExerciseAngina**: describes if the patient is affected by angina pectoris after physical exercise (Y: yes, N: no).\n\n"
+
+        f"**Oldpeak**: measures the ST segment depression observed on an electrocardiogram (ECG) during exercise.\n\n"
+
+        f"**ST_slope**: indicates the slope of the ST segment during exercise, categorized as:\n"
+        f"  - **Up**: upsloping\n\n"
+        f"  - **Flat**: flat\n\n"
+        f"  - **Down**: downsloping\n\n"
+
+    )
+
+
 
     # Generate Live Data
     # check_variables_for_UI(tenure_features, churn_features, cluster_features)

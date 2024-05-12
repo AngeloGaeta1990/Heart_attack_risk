@@ -11,11 +11,12 @@ sns.set_style("whitegrid")
 
 
 def page_correlation_study_body():
+    """
+    Main function for page correlation study
+    load dataset and perform distribution and parallel plot 
+    """
 
-    # load data
     df = load_heart_data()
-
-    # hard copied from churned customer study notebook
     vars_to_study = ['ST_Slope', 'ChestPainType', 'ExerciseAngina', 'Oldpeak', 'MaxHR']
 
     st.write("### Myocardial infarction Study")
@@ -23,7 +24,6 @@ def page_correlation_study_body():
         f"The client wants to understand which variables are most relevant and correlate with myocardial infarction. "
         )
 
-    # inspect data
     if st.checkbox("Inspect dataset"):
         st.write(
             f"* The dataset has {df.shape[0]} rows and {df.shape[1]} columns, "
@@ -33,14 +33,12 @@ def page_correlation_study_body():
 
     st.write("---")
 
-    # Correlation Study Summary
     st.write(
         f"* A correlation study was conducted in the notebook to better understand how "
         f"the variables are correlated to Myocardial infarction levels. \n"
         f"The most correlated variable are: **ST_Slope, ChestPainType, ExerciseAngina, Oldpeak, MaxHR**"
     )
 
-    # Text based on "Data exploration" notebook - "Conclusions and Next steps" section
     st.info(
         f"The correlation indications and plots below converge in interpretation. "
         f"They suggest that a patient at risk of myocardial infarction exhibits the following characteristics: \n"
@@ -51,24 +49,24 @@ def page_correlation_study_body():
         f"* Has a maximum heart rate >160 bpm \n"
     )
 
-    # Code copied from "02 - Churned Customer Study" notebook - "EDA on selected variables" section
     df_eda = df.filter(vars_to_study + ['HeartDisease'])
+    df_eda = categorical_mapping(df_eda)
 
-    # Individual plots per variable
     if st.checkbox("Heart Disease Levels per Variable"):
         myocardial_risk_per_variable(df_eda)
 
-    # Parallel plot
     if st.checkbox("Parallel Plot"):
         st.write(
             f"Information in dark blue indicates the profile of a patient affected by myocardial infarction.")
         parallel_plot_heart_attack(df_eda)
 
 
-# function created using "Data exploration" notebook code - "Variables Distribution by Heart Attack risk" section
+
 def myocardial_risk_per_variable(df_eda):
+    """
+    function created using "Data exploration" notebook code - "Variables Distribution by Heart Attack risk" section
+    """
     target_var = 'HeartDisease'
-    df_eda = categorical_mapping(df_eda)
     for col in df_eda.drop([target_var], axis=1).columns.to_list():
         if df_eda[col].dtype == 'object':
             plot_categorical(df_eda, col, target_var)
@@ -76,22 +74,28 @@ def myocardial_risk_per_variable(df_eda):
             plot_numerical(df_eda, col, target_var)
 
 
-# code copied from "Data exploration" notebook - "Variables Distribution by Heart Attack risk" section
+
 def plot_categorical(df, col, target_var):
+    """
+    code copied from "Data exploration" notebook - "Variables Distribution by Heart Attack risk" section
+    """
     fig, axes = plt.subplots(figsize=(12, 5))
     sns.countplot(data=df, x=col, hue=target_var,
                   order=df[col].value_counts().index)
     plt.xticks(rotation=90)
     plt.title(f"{col}", fontsize=20, y=1.05)
-    st.pyplot(fig)  # st.pyplot() renders image, in notebook is plt.show()
+    st.pyplot(fig) 
 
 
-# code copied from "Data exploration" notebook - "Variables Distribution by Heart Attack risk" section
+
 def plot_numerical(df, col, target_var):
+    """
+    code copied from "Data exploration" notebook - "Variables Distribution by Heart Attack risk" section
+    """
     fig, axes = plt.subplots(figsize=(8, 5))
     sns.histplot(data=df, x=col, hue=target_var, kde=True, element="step")
     plt.title(f"{col}", fontsize=20, y=1.05)
-    st.pyplot(fig)  # st.pyplot() renders image, in notebook is plt.show()
+    st.pyplot(fig) 
 
 
 # function created using "Data exploration" notebook code - Parallel Plot section
@@ -99,6 +103,7 @@ def parallel_plot_heart_attack(df):
     vars_to_study = ['ST_Slope', 'ChestPainType', 'ExerciseAngina', 'Oldpeak', 'MaxHR', 'HeartDisease']
     df_eda = df[vars_to_study]
     df_eda['HeartDisease'] = df_eda['HeartDisease'].map({'Risk': 1, 'No risk': 0})
+    print(df_eda)
     df_parallel = numerical_mapping(df_eda)
     fig = px.parallel_categories(df_parallel, color="HeartDisease")
 

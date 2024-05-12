@@ -3,8 +3,6 @@ import streamlit as st
 def page_summary_body():
 
     st.write("### Project Summary")
-
-    # text based on README file - "Dataset Content" section
     st.info(
 
         f"**Project Dataset**:\n"
@@ -55,10 +53,9 @@ def page_summary_body():
 
     # copied from README file - "Business Requirements" section
     st.success(
-        f"A physician provided anonymized patient data related to three different hospitals.\n\n"
+        f"A physician provided anonymized patient data related to five different hospitals.\n\n"
         f"The first business requirement is to understand which variables correlate the most with a heart attack risk.\n\n "
         f"The second business requirement is to predict with at least 80% precision which patients are at risk of having a myocardial infarction, therefore:\n\n"
         f"The null hypothesis H0 is: Database features cannot predict myocardial infarction.\n\n"
-        f"The alternative hypothesis H1 is: Database features can predict myocardial infarction.\n\n"
-        f"This insight will be used by the physician to identify patients who are at risk of having a myocardial infarction."
+        f"The alternative hypothesis H1 is: Database features can predict myocardial high risk of having a myocardial infarction."
         )
