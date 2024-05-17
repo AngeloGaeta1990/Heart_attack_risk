@@ -1,10 +1,8 @@
 import plotly.express as px
 import numpy as np
 from feature_engine.discretisation import ArbitraryDiscretiser
-from sklearn.preprocessing import KBinsDiscretizer
 import streamlit as st
 from src.data_management import load_heart_data
-
 import matplotlib.pyplot as plt
 import seaborn as sns
 sns.set_style("whitegrid")
@@ -13,40 +11,45 @@ sns.set_style("whitegrid")
 def page_correlation_study_body():
     """
     Main function for page correlation study
-    load dataset and perform distribution and parallel plot 
+    load dataset and perform distribution and parallel plot
     """
 
     df = load_heart_data()
-    vars_to_study = ['ST_Slope', 'ChestPainType', 'ExerciseAngina', 'Oldpeak', 'MaxHR']
+    vars_to_study = ['ST_Slope', 'ChestPainType', 'ExerciseAngina',
+                     'Oldpeak', 'MaxHR']
 
     st.write("### Myocardial infarction Study")
     st.info(
-        f"The client wants to understand which variables are most relevant and correlate with myocardial infarction. "
-        )
+        "The client wants to understand which variables are most relevant "
+        "and correlate with myocardial infarction."
+    )
 
     if st.checkbox("Inspect dataset"):
         st.write(
             f"* The dataset has {df.shape[0]} rows and {df.shape[1]} columns, "
-            f"find below the first 10 rows.")
-
+            f"find below the first 10 rows."
+        )
         st.write(df.head(10))
 
     st.write("---")
 
     st.write(
-        f"* A correlation study was conducted in the notebook to better understand how "
-        f"the variables are correlated to Myocardial infarction levels. \n"
-        f"The most correlated variable are: **ST_Slope, ChestPainType, ExerciseAngina, Oldpeak, MaxHR**"
+        "* A correlation study was conducted in the notebook to better "
+        "understand how the variables are correlated to Myocardial "
+        "infarction levels. \n"
+        "The most correlated variables are: **ST_Slope, ChestPainType, "
+        "ExerciseAngina, Oldpeak, MaxHR**"
     )
 
     st.info(
-        f"The correlation indications and plots below converge in interpretation. "
-        f"They suggest that a patient at risk of myocardial infarction exhibits the following characteristics: \n"
-        f"* Flat or down ST_slope \n"
-        f"* Asymptomatic chest pain \n"
-        f"* Has angina after exercise \n"
-        f"* Shows an old peak >4 \n"
-        f"* Has a maximum heart rate >160 bpm \n"
+        "The correlation indications and plots below converge in "
+        "interpretation. They suggest that a patient at risk of myocardial "
+        "infarction exhibits the following characteristics: \n"
+        "* Flat or down ST_slope \n"
+        "* Asymptomatic chest pain \n"
+        "* Has angina after exercise \n"
+        "* Shows an old peak >4 \n"
+        "* Has a maximum heart rate >160 bpm \n"
     )
 
     df_eda = df.filter(vars_to_study + ['HeartDisease'])
@@ -57,14 +60,16 @@ def page_correlation_study_body():
 
     if st.checkbox("Parallel Plot"):
         st.write(
-            f"Information in dark blue indicates the profile of a patient affected by myocardial infarction.")
+            "Information in dark blue indicates the profile of a patient "
+            "affected by myocardial infarction."
+        )
         parallel_plot_heart_attack(df_eda)
-
 
 
 def myocardial_risk_per_variable(df_eda):
     """
-    function created using "Data exploration" notebook code - "Variables Distribution by Heart Attack risk" section
+    function created using "Data exploration" notebook code -
+    "Variables Distribution by Heart Attack risk" section
     """
     target_var = 'HeartDisease'
     for col in df_eda.drop([target_var], axis=1).columns.to_list():
@@ -74,36 +79,40 @@ def myocardial_risk_per_variable(df_eda):
             plot_numerical(df_eda, col, target_var)
 
 
-
 def plot_categorical(df, col, target_var):
     """
-    code copied from "Data exploration" notebook - "Variables Distribution by Heart Attack risk" section
+    code copied from "Data exploration" notebook -
+    "Variables Distribution by Heart Attack risk" section
     """
     fig, axes = plt.subplots(figsize=(12, 5))
     sns.countplot(data=df, x=col, hue=target_var,
                   order=df[col].value_counts().index)
     plt.xticks(rotation=90)
     plt.title(f"{col}", fontsize=20, y=1.05)
-    st.pyplot(fig) 
-
+    st.pyplot(fig)
 
 
 def plot_numerical(df, col, target_var):
     """
-    code copied from "Data exploration" notebook - "Variables Distribution by Heart Attack risk" section
+    code copied from "Data exploration" notebook -
+    "Variables Distribution by Heart Attack risk" section
     """
     fig, axes = plt.subplots(figsize=(8, 5))
     sns.histplot(data=df, x=col, hue=target_var, kde=True, element="step")
     plt.title(f"{col}", fontsize=20, y=1.05)
-    st.pyplot(fig) 
+    st.pyplot(fig)
 
 
-# function created using "Data exploration" notebook code - Parallel Plot section
 def parallel_plot_heart_attack(df):
-    vars_to_study = ['ST_Slope', 'ChestPainType', 'ExerciseAngina', 'Oldpeak', 'MaxHR', 'HeartDisease']
+    """
+    function created using "Data exploration" notebook code -
+    Parallel Plot section
+    """
+    vars_to_study = ['ST_Slope', 'ChestPainType', 'ExerciseAngina',
+                     'Oldpeak', 'MaxHR', 'HeartDisease']
     df_eda = df[vars_to_study]
-    df_eda['HeartDisease'] = df_eda['HeartDisease'].map({'Risk': 1, 'No risk': 0})
-    print(df_eda)
+    df_eda['HeartDisease'] = df_eda['HeartDisease'].map(
+        {'High Risk': 1, 'Low risk': 0})
     df_parallel = numerical_mapping(df_eda)
     fig = px.parallel_categories(df_parallel, color="HeartDisease")
 
@@ -115,6 +124,9 @@ def parallel_plot_heart_attack(df):
 
 
 def rename_bin_labels(column_name, map_name, disc):
+    """
+    function to rename bins in Heart rate column
+    """
     n_classes = len(map_name) - 1
     classes_ranges = disc.binner_dict_[column_name][1:-1]
 
@@ -130,22 +142,31 @@ def rename_bin_labels(column_name, map_name, disc):
 
 
 def categorical_mapping(df):
-    heart_disease_map = {1: 'Risk', 0: 'No risk'}
-    chest_pain_map = {'ASY': 'Asymptomatic', 'NAP': 'Non Anginal Pain', 'ATA': 'Atypical Angina', 'TA': 'Typical Angina'}
+    """
+    function to value names in categorical variables
+    """
+    heart_disease_map = {1: 'High Risk', 0: 'Low risk'}
+    chest_pain_map = {'ASY': 'Asymptomatic', 'NAP': 'Non Anginal Pain',
+                      'ATA': 'Atypical Angina', 'TA': 'Typical Angina'}
     exercise_angina_map = {'N': 'No Angina', 'Y': 'Angina'}
     df['HeartDisease'] = df['HeartDisease'].map(heart_disease_map)
     df['ChestPainType'] = df['ChestPainType'].map(chest_pain_map)
     df['ExerciseAngina'] = df['ExerciseAngina'].map(exercise_angina_map)
     return df
 
+
 def numerical_mapping(df):
+    """
+    function to replace numerical values with bins in oldpeak and maxhr
+    variables
+    """
     oldpeak_map = [-np.Inf, 0, 2, 4, np.Inf]
     max_hr_map = [-np.Inf, 100, 120, 140, 160, 180, np.Inf]
-    disc = ArbitraryDiscretiser(binning_dict={'Oldpeak': oldpeak_map, 'MaxHR': max_hr_map})
+    disc = ArbitraryDiscretiser(
+        binning_dict={'Oldpeak': oldpeak_map, 'MaxHR': max_hr_map})
     df_parallel = disc.fit_transform(df)
     max_hr_labels = rename_bin_labels('MaxHR', max_hr_map, disc)
     oldpeak_labels = rename_bin_labels('Oldpeak', oldpeak_map, disc)
     df_parallel['MaxHR'] = df_parallel['MaxHR'].replace(max_hr_labels)
     df_parallel['Oldpeak'] = df_parallel['Oldpeak'].replace(oldpeak_labels)
     return df_parallel
-    
