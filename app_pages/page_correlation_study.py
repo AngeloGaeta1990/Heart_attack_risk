@@ -34,22 +34,22 @@ def page_correlation_study_body():
     st.write("---")
 
     st.write(
-        "* A correlation study was conducted in the notebook to better "
-        "understand how the variables are correlated to Myocardial "
-        "infarction levels. \n"
+        "A correlation study was conducted in the notebook to better "
+        "understand how the variables are correlated with myocardial "
+        "infarction risk. \n\n"
         "The most correlated variables are: **ST_Slope, ChestPainType, "
         "ExerciseAngina, Oldpeak, MaxHR**"
     )
 
     st.info(
         "The correlation indications and plots below converge in "
-        "interpretation. They suggest that a patient at risk of myocardial "
-        "infarction exhibits the following characteristics: \n"
+        "interpretation. They suggest that a patient at high risk of "
+        "myocardial infarction exhibits the following characteristics: \n\n"
         "* Flat or down ST_slope \n"
         "* Asymptomatic chest pain \n"
         "* Has angina after exercise \n"
         "* Shows an old peak >4 \n"
-        "* Has a maximum heart rate >160 bpm \n"
+        "* Has on average a lower maximum heart rate \n"
     )
 
     df_eda = df.filter(vars_to_study + ['HeartDisease'])
@@ -61,9 +61,20 @@ def page_correlation_study_body():
     if st.checkbox("Parallel Plot"):
         st.write(
             "Information in dark blue indicates the profile of a patient "
-            "affected by myocardial infarction."
+            "at high risk of by myocardial infarction."
         )
         parallel_plot_heart_attack(df_eda)
+
+        st.write(
+            "A patient at high risk of myocardial infarction shows the "
+            "following phenotype: \n\n"
+            "- **ST_Slope**. Flat or down \n\n"
+            "- **ChestPainType**. Asymptomatic \n\n"
+            "- **ExerciseAngina**. The patient is affected by angina after "
+            "physical exercise \n\n"
+            "- **Oldpeak**. The old peak is > 0 \n\n"
+            "- **MAaxHR**. Has on average a lower heart rate"
+        )
 
 
 def myocardial_risk_per_variable(df_eda):

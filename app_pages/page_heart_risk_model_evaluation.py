@@ -33,11 +33,13 @@ def page_heart_risk_model_evaluation_body():
     st.info(
        "Logistic regression proved to be the most suited algorithm"
        "for the study. \n\n"
-       "It shows a precision > 80 on both train and test sets. \n\n"
+       "It shows a precision greater than '80%' on both train and test "
+       "sets.\n\n"
        "0.384 and 0.285 of R2 Score on train and test sets respectively.\n\n"
        "The feature selection component of the pipeline highlighted the "
        "following as "
-       "the features which correlate the most with myocardial infarction: "
+       "the features which correlate the most with myocardial infarction "
+       "risk:\n\n"
        "**ST_Slope, ChestPainType, ExerciseAngina, Oldpeak, FastingBS, Sex**."
     )
     st.write("---")
@@ -52,8 +54,15 @@ def page_heart_risk_model_evaluation_body():
     st.write("---")
     if st.checkbox("Feature Importance"):
         feature_importance_plot(heart_risk_pipe, X_train)
-        st.write("Shows the most important feature selected by the feat"
-                 "selection step of the pipeline ")
+        st.info("Shows the most important feature selected by the feat"
+                "selection step of the pipeline, ranked by absolute "
+                "coefficient.\n\n"
+                "**1.ChestPainType**\n\n"
+                "**2.ST_slope** \n\n"
+                "**3.Oldpeak** \n\n"
+                "**4.FastingBS** \n\n"
+                "**5.ExerciseAngina**\n\n"
+                "**6.Sex**\n\n")
         st.write("")
 
     st.write("### Pipeline Performance")
@@ -71,6 +80,11 @@ def page_heart_risk_model_evaluation_body():
                          'Oldpeak', 'ST_Slope']
         plot_roc_curve_classifier(heart_risk_pipe, X_test, y_test,
                                   best_features)
+        st.info("The ROC curve compares the model's results to those of a "
+                "random sampler, and plots the sensitivity against "
+                "1-specifity.\n\n"
+                "The AUC of 0.88 proves the excellent ability of the "
+                "model to distinguish between low-risk and high-risk patients")
 
 
 def plot_roc_curve_classifier(pipeline, X_test, y_test, best_features):

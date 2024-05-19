@@ -9,55 +9,55 @@ def page_summary_body():
     st.info(
         "**Project Dataset**:\n"
         "The dataset represents anonymized patient data collected from five "
-        "different hospitals: Budapest, Zurich, Basel, Long Beach and "
+        "different hospitals in Budapest, Zurich, Basel, Long Beach and "
         "Cleveland.\n\n"
 
         "**Project Terms & Jargon**\n\n"
-        "**Chest Pain type**: describes the patient's chest pain and can be "
+        "**Chest Pain type**: Describes the patient's chest pain and can be "
         "categorized as follows:\n"
-        "- **Typical angina (TA)**: chest pain or discomfort caused by "
+        "- **Typical angina (TA)**: Chest pain or discomfort caused by "
         "reduced oxygen-rich blood flow to the heart muscle.\n\n"
-        "- **Atypical angina (ATA)**: chest pain or discomfort with symptoms "
+        "- **Atypical angina (ATA)**: Chest pain or discomfort with symptoms "
         "not typical of angina pectoris.\n\n"
-        "- **Non-anginal pain (NAP)**: chest pain or discomfort unrelated to "
+        "- **Non-anginal pain (NAP)**: Chest pain or discomfort unrelated to "
         "angina or heart-related issues.\n\n"
-        "- **Asymptomatic (ASY)**: a condition where a person does not "
+        "- **Asymptomatic (ASY)**: A condition where a person does not "
         "exhibit any noticeable symptoms.\n\n"
 
-        "**RestingBP**: refers to the measurement of blood pressure when a "
+        "**RestingBP**: Refers to the measurement of blood pressure when a "
         "person is at rest, measured in mm Hg.\n\n"
 
-        "**Cholesterol**: serum cholesterol level measured in mm/dl.\n\n"
+        "**Cholesterol**: Serum cholesterol level measured in mm/dl.\n\n"
 
-        "**FastingBS**: blood sugar levels during fasting:\n\n"
+        "**FastingBS**: Blood sugar levels during fasting:\n\n"
         " - 1: FastingBS > 120 mg/dl\n\n"
         " - 0: FastingBS <= 120 mg/dl\n\n"
 
-        "**RestingECG**: result of resting electrocardiogram (ECG), values "
-        "are:\n\n"
+        "**RestingECG**: Result of resting electrocardiogram (ECG), with "
+        "values: \n\n"
         " - **Normal**\n\n"
-        " - **ST**: represents the ST segment in an ECG.\n\n"
-        " - **LVH**: left ventricular hypertrophy, indicating thickening or "
+        " - **ST**: Represents the ST segment in an ECG.\n\n"
+        " - **LVH**: Left ventricular hypertrophy, indicating thickening or "
         "enlargement of the muscular wall of the left ventricle.\n\n"
 
-        "**MaxHR**: maximum heart rate achieved in bpm.\n\n"
+        "**MaxHR**: Maximum heart rate achieved in bpm.\n\n"
 
-        "**ExerciseAngina**: describes if the patient is affected by angina "
+        "**ExerciseAngina**: Indicates if the patient is affected by angina "
         "pectoris after physical exercise (Y: yes, N: no).\n\n"
 
-        "**Oldpeak**: measures the ST segment depression observed on an "
+        "**Oldpeak**: Measures the ST segment depression observed on an "
         "electrocardiogram (ECG) during exercise.\n\n"
 
-        "**ST_slope**: indicates the slope of the ST segment during exercise, "
+        "**ST_slope**: Indicates the slope of the ST segment during exercise, "
         "categorized as:\n"
-        "  - **Up**: upsloping\n\n"
-        "  - **Flat**: flat\n\n"
-        "  - **Down**: downsloping\n\n"
+        "  - **Up**: Upsloping\n\n"
+        "  - **Flat**: Flat\n\n"
+        "  - **Down**: Downsloping\n\n"
 
-        "**HeartDisease**: represents if a patient has been affected by a "
+        "**HeartDisease**: Indicates if a patient is at high risk of "
         "myocardial infarction:\n"
-        " - 1: Patient is affected\n\n"
-        " - 0: Patient is not affected\n\n"
+        " - 1: High risk\n\n"
+        " - 0: Low risk\n\n"
     )
 
     st.write(
@@ -66,8 +66,20 @@ def page_summary_body():
         "Heart_attack_risk/blob/main/README.md)."
     )
 
+    st.write("### Project Aim")
     st.success(
-        "A physician provided anonymized patient data related to five "
+        "A physician provided anonymized patient data from five "
         "different hospitals.\n\n"
-        "The first business requirement is to understand which variables "
+        "The first business requirement is to identify which variables "
+        "most strongly correlate with a high risk of myoardial infarction \n\n"
+        "The second business requirement is to predict with at least 80% "
+        "precision which patients are at high risk of having a myocardial "
+        "infarction. Therefore:\n\n"
+        "The **null hypothesis(H0)** is: The database features cannot predict "
+        "a high risk of myocardial infarction.\n\n"
+        "The **alternative hypothesis(H1)**  is: The database features can "
+        "predict a high risk of myocardial infarction.\n\n"
+        "These insights will be used by physicians to identify patients "
+        " at high risk of myocardial infarction and to provide "
+        "preventive therapies"
     )
