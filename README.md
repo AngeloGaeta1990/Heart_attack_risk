@@ -18,11 +18,15 @@ Live link to [Myocardial infarction Risk Analysis](https://heart-attack-risk-10d
 - [Hypothesys](#Hypothesis)
 - [User stories](#user-stories)
 - [ML model development](#ml-model-development)
+    - [Data Cleaning and Feature Engeenering](#data-cleaning-and-feature-engeenering)
+    - [ML pipeline](#ml-pipeline)
+        - [ML pipeline evaluation](#ml-pipeline-evaluation)
+- [Correlation study](#correlation-study)
 
 ---
 ## Dataset
 
-The dataset I used in this project is publicly available on [Kaggle](https://www.kaggle.com/) and can be downloaded and inspected here: [dataset](https://www.kaggle.com/datasets/fedesoriano/heart-failure-prediction).
+The dataset I used in this project is publicly available on [Kaggle](https://www.kaggle.com/) and can be downloaded and inspected here: [Heart failure dataset](https://www.kaggle.com/datasets/fedesoriano/heart-failure-prediction).
 
 The dataset contains anonymized patient data collected from five different hospitals in Budapest, Zurich, Basel, Long Beach and Cleveland :
  - Cleveland: 303 observation
@@ -108,6 +112,9 @@ In this project, the null hypothesis (H0) is the following: The database feature
 
 ## User stories
 
+Below, I added the user stories I used to build the project: 
+
+
  - As a user, I can get a measure of the myocardial infarction risk, 
  so that I can provide therapies to patient at high risk of myocardial infarction.
 
@@ -122,10 +129,104 @@ In this project, the null hypothesis (H0) is the following: The database feature
 -----
 ## ML model development
 
+The ML model I implemented consists of two pipelines: one for data cleaning and feature engineering, and the second for feature selection and model building.
+
+### Data Cleaning and Feature Engeenering
+
+The data cleaning and feature engineering pipeline consists of the following steps: RandomSampleImputer, OrdinalCategoricalEncoder, and Winsorizer.
 
 
+**RandomSampleInputer**. None of the features in the dataset had missing values. However, upon inspection, I noticed that approximately 20% of the values for the cholesterol feature were zeros.
+
+![Raw data cholesterol histogram](/docs/images/raw_cholesterol_hist.png)
+
+Therefore, I used the RandomSampleImputer to redistribute the data uniformly across the distribution. After applying the RandomSampleImputer, I obtained the following distribution:
+
+![Random Sample inputer cholesterol histogram](/docs/images/random_sample_inputer_cholesterol.png)
+
+**OridnalCategoricalEncoder**.  I used the OrdinalCategoricalEncoder to convert all the features of type object into numerical features. The object-type features are:
+**Sex**, **ChestPainType**,**RestingECG**, **ExerciseAngina** and **ST_Slope**.
 
 
+**Winsorizer**. I also noticed that the features **Cholesterol**, **Age**, **RestingBP**, and **Oldpeak** had outliers. Therefore, I applied the Winsorizer to all of them so that outliers are mapped to 1.5 times the interquartile range (IQR) of the values between the 25th and 75th percentiles.
+
+![Cholesterol Winsorizer distribution](docs/images/cholesterol_winsorizer.png)
+
+![Age Winsorizer distribution](docs/images/age_winsorizer.png)
+
+![RestingBP Winsorizer distribution](docs/images/resting_bp_winsorizer.png)
+
+![Oldpeak Winsorizer distribution](docs/images/oldpeak_winsorizer.png)
+
+### ML pipeline
+
+The ML pipeline instead consist of the following steps: **StandardScaler**, **FeatSelection**, **LogisticRegression**.
+
+**StandardScaler**. It centers the data around the mean by subtracting the mean value of each feature from the data.
+
+**FeatSelection**.  Fits the model to the data and selects the features based on their importance. This helps in reducing the dimensionality of the data and removing irrelevant features, which can improve model performance and reduce overfitting.
+
+**LogisticRegression**. I used GridSearch to check which estimator would fit best with the dataset and got the following result:
+
+![GridSearch reult](/docs/images/gridsearch_result.png)
+
+Logistic Regression resulted in the estimator with the highest mean score. Therefore, I proceeded with hyperparameterization and model fitting. I divided the dataset into train (80% of the data) and test (20% of the data) sets.
+
+#### ML pipeline evaluation
+
+To evaluate the pipeline, I used the confusion matrix:
+
+ - **Train Set**
+
+    ![Train set table of truth](/docs/images/table_of_truth_train.png)
+
+
+ - **Test Set**
+
+    ![Test set table of truth](/docs/images/table_of_truth_test.png)
+
+Furthermore, I also plotted the ROC curve to measure the difference between the method I implemented and a random sampler.
+
+![ROC curve plot](/docs/images/roc_curve_plot.png)
+
+Taken together, the results suggest that one of the two business requirements was addressed (see[Business requirements](#business-requirements)), as the precision is >80% on both the test and train sets. Additionally, the ROC curve highlighted a significant difference in the true and false positive rates compared to a random sampler.
+
+---
+
+## Correlation study
+
+To study which features correlate the most with the risk of myocardial infarction, I used Spearman and Pearson tests, after converting all the object-type variables into numerical values with the OrdinalEncoder. Both tests ranked the features as follows:
+
+
+| Rank | Feature          | Spearman Score | Pearson Score |
+|------|------------------|----------------|---------------|
+| 1    | ST_Slope         | 0.591913       | 0.558771      |
+| 2    | ExerciseAngina   | 0.494282       | 0.494282      |
+| 3    | ChestPainType    | 0.465971       | 0.459017      |
+| 4    | Oldpeak          | 0.419046       | 0.403951      |
+| 5    | MaxHR            | -0.404827      | -0.400421     |
+| 6    | Sex              | -0.305445      | -0.305445     |
+| 7    | Age              | 0.289576       | 0.282039      |
+| 8    | FastingBS        | 0.267291       | 0.267291      |
+| 9    | Cholesterol      | -0.139873      | -0.232741     |
+| 10   | RestingBP        | 0.113860       | 0.107589      |
+
+
+Both tests identified the same features as the ones that correlate the most with heart disease risk. Furthermore, I used a parallel plot to define the profile of a patient at high risk of myocardial infarction:
+
+![Parallel plot](/docs/images/parallel_plot.png)
+
+Here, we can see that a patient at high risk of myocardial infarction shows the following phenotype:
+
+- **ST_Slope**. Flat or down 
+- **ChestPainType**. Asymptomatic
+- **ExerciseAngina**. The patient is affected by angina after physical exercise 
+- **Oldpeak**. The old peak is > 0 
+- **MAaxHR**. Has on average a lower heart rate
+
+The above information can be considered by physicians to define the profile of patients at high risk of myocardial infarction.
+
+---
 bug
 
 xgboost size too large
@@ -135,6 +236,10 @@ Pandas 2.20 not compatible with PPscore library
 heroku port not found
 ydata-profiling latest version not compatible with pandas < 2.20
 best feature was not in the correct order for ROC curve plot
+
+
+
+
 
 
 
