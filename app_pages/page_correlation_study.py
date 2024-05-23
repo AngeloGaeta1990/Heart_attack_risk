@@ -37,8 +37,10 @@ def page_correlation_study_body():
         "A correlation study was conducted in the notebook to better "
         "understand how the variables are correlated with myocardial "
         "infarction risk. \n\n"
-        "The most correlated variables are: **ST_Slope, ChestPainType, "
-        "ExerciseAngina, Oldpeak, MaxHR**"
+        "The study involved the use of Spearman and Pearson tests alongside "
+        "the predictive power score(PPS).\n "
+        "The test revealed that the most correlated variables are: "
+        "**ST_Slope, ChestPainType, ExerciseAngina, Oldpeak, MaxHR**"
     )
 
     st.info(
@@ -55,7 +57,7 @@ def page_correlation_study_body():
     df_eda = df.filter(vars_to_study + ['HeartDisease'])
     df_eda = categorical_mapping(df_eda)
 
-    if st.checkbox("Heart Disease Levels per Variable"):
+    if st.checkbox("Myocardial infarction risk per variable"):
         myocardial_risk_per_variable(df_eda)
 
     if st.checkbox("Parallel Plot"):

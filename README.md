@@ -22,6 +22,10 @@ Live link to [Myocardial infarction Risk Analysis](https://heart-attack-risk-10d
     - [ML pipeline](#ml-pipeline)
         - [ML pipeline evaluation](#ml-pipeline-evaluation)
 - [Correlation study](#correlation-study)
+- [Dashboard design](#dashboard-design)
+- [Testing](#testing)
+    - [Bug and Fixes](#bugs-and-fixes)
+    - [Manual Testing](#manual-testing)
 
 ---
 ## Dataset
@@ -227,15 +231,124 @@ Here, we can see that a patient at high risk of myocardial infarction shows the 
 The above information can be considered by physicians to define the profile of patients at high risk of myocardial infarction.
 
 ---
-bug
 
-xgboost size too large
-parallel plot black line, becasue heartdisease NA
-plarallel plot black line only if heart disease per leval was not run before
-Pandas 2.20 not compatible with PPscore library
-heroku port not found
-ydata-profiling latest version not compatible with pandas < 2.20
-best feature was not in the correct order for ROC curve plot
+## Dashboard design
+
+I designed the dashboard using streamlit, and it includes fours different pages: **Project Summary**, **Myocardial infarction correlation study**, **Myocardial infarction risk analysis**, and **Myocardial infarction model evaluation**:
+
+-   **Project summary**.  This page includes a list of jargon terms necessary to understand the project's aim. 
+
+    ![Project summary](/docs/images/project_summary.png)
+
+
+    Furthermore, it provides a description of the project's aim and a link to the README file.
+
+    ![Project aim](/docs/images/project_aim.png)
+
+
+-   **Myocardial infarction correlation study**. This summary includes the correlation study conducted in the Jupyter notebook. The use of Spearman and Pearson correlation tests revealed that the variables most strongly correlated with a high risk of myocardial infarction are: **ST_Slope**, **ChestPainType**, **ExerciseAngina**, **Oldpeak** and **MaxHR**.
+
+    ![Myocardial infarction correlation study section 1](/docs/images/dataset_inpsect.png)
+
+    Furthermore, the notebook allows inspection of the original dataset, provides histograms for categorical variables, and shows the distribution of numerical variables in relation to the target variable.
+
+    ![Myocardial infarction correlation study section 2](/docs/images/variables_distribution.png)
+
+    Lastly, it includes a parallel plot visualizing the typical profile of a patient at high risk of myocardial infarction.
+
+    ![Myocardial infarction correlation study section 3](/docs/images/parallel_plot_page.png)
+
+-  **Myocardial infarction risk analysis**.  This page includes a legend providing a description of each feature and its values.
+
+    ![Myocardial infarction risk analysis section 1](/docs/images/heart_risk_analysis.png)
+
+    The second section includes widgets where the value for each feature can be entered.
+
+    ![Myocardial infarction risk analysis section 2](/docs/images/widgets.png)
+ 
+    After clicking on the "Run Predictive Analysis" button, the user will receive the probability of the patient being at low or high risk of myocardial infarction.
+
+- **Myocardial infarction model evaluation**. This page evaluates the performance of the ML model used to estimate if a patient is at high risk of myocardial infarction. The first section provides a summary of model metrics. 
+
+    ![Myocardial infarction model evaluation section 1](/docs/images/pipeline_steps.png)
+
+
+    The second section describes the steps included in the ML pipeline. The third section includes a plot showing which features are most correlated with a high risk of myocardial infarction, sorted by coefficient magnitude. 
+    
+    ![Myocardial infarction model evaluation section 2](/docs/images/feature_importance.png)
+    
+    The pipeline performance section of the page shows the confusion matrix for both the test and train sets, with precision notably higher than 80%, addressing the second business requirement [Business requirements](#business-requirements).
+
+    ![Myocardial infarction model evaluation section 3](/docs/images/confusion_matrix.png)
+
+    The error score section includes measures of R², Mean Absolute Error, Mean Squared Error, and Root Mean Squared Error.
+    The last section includes the ROC curve plot, showing the difference in the true positive rate and false positive rate when the model is compared to a random sampler.
+
+    ![Myocardial infarction model evaluation section 4](/docs/images/confusion_matrix.png)
+---
+
+## Testing
+
+---
+
+### Bugs and Fixes
+
+1. **Error**: During deployment on Heroku, the following error message was displayed in the Heroku logs:
+
+    ```cmd
+    -----> Discovering process types
+        Procfile declares types -> web
+    -----> Compressing...
+        !     Compiled slug size: 576.6M is too large (max is 500M).
+        !     See: http://devcenter.heroku.com/articles/slug-size
+        !     Push failed
+
+    ```
+
+    **Cause**: The Heroku slug size was too large.
+
+    **Solution**: The `xgboost` library alone has a size of approximately 260 MB. Since the `xgboost` library was not necessary to build the application, I removed it from the requirements.
+
+1. **Error**:  During deployment on Heroku, I received the error "port not found."
+
+    **Cause**: The port was not added as a config var on Heroku.
+
+    **Solution**: Added the port as a config var and included `--server.port $PORT` in the Procfile.
+
+1. **Error**:  After installing the `ppscore` library, I received the error that `Pandas` library < `2.20` was required.
+
+    **Cause**: `ppscore==1.3.0` is not compatible with `Pandas 2.20`.
+
+    **Solution**: Downgraded `Pandas` to `1.5.3`.
+
+1. **Error**: `ydata-profiling 4.8.3` was not compatible with `Pandas 1.5.3`.
+
+   **Cause**: `ydata-profiling 4.8.3` was not compatible with `Pandas 1.5.3`. The latest `ydata-profiling` version compatible with `Pandas 1.5.3` is `ydata-profiling 4.6.4`. However, `ydata-profiling 4.6.4` was not compatible with `Python 3.12.3`, but only with `Python 3.11.9`.
+
+   **Solution**: Downgraded to `Python 3.11.9` and downgraded `ydata-profiling` to `4.6.4`.
+
+1. **Error**:  In Streamlit, the parallel plot was showing only black lines, and the low and high-risk values were not visible..
+
+   **Cause**: The dataset used as input did not include target variable values; for the target variables, all values were NA..
+
+   **Solution**: I updated the dataset used as input so that the target values were listed as 0 and 1 as in the original dataset.
+
+1. **Error**: The parallel plot was showing black lines only, and the low and high-risk values were not visible, only if the parallel plot was run without selecting the Myocardial Infarction risk per variable plot.
+
+    **Cause**: The dataset including the target variable values was added to the function generating the Myocardial Infarction risk per variable plot.
+
+    **Solution**:  Moved the function to have the complete dataset in the upward function.
+
+1. **Error**: In Streamlit, the ROC curve plot was showing an area under the curve of 0.65, whereas in the Jupyter notebook, the area under the curve was 0.88.
+
+   **Cause**: Variables to plot the ROC curve were not provided in the correct order.
+
+   **Solution**:  Provided the variables in the correct order in the ROC curve function.
+
+---
+
+### Manual Testing
+
 
 
 

@@ -33,7 +33,7 @@ def page_heart_risk_model_evaluation_body():
     st.info(
        "Logistic regression proved to be the most suited algorithm"
        "for the study. \n\n"
-       "It shows a precision greater than '80%' on both train and test "
+       "It shows a precision greater than 80% on both train and test "
        "sets.\n\n"
        "0.384 and 0.285 of R2 Score on train and test sets respectively.\n\n"
        "The feature selection component of the pipeline highlighted the "

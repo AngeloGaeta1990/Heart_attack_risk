@@ -2,11 +2,11 @@ import streamlit as st
 import pandas as pd
 from sklearn.metrics import classification_report, confusion_matrix
 
-# code copied from "Modeling and Evaluation" notebooks
-
 
 def confusion_matrix_and_report(X, y, pipeline, label_map):
-
+    """
+    Creates confusion matrix and report
+    """
     prediction = pipeline.predict(X)
 
     st.write('#### Confusion Matrix')
@@ -19,8 +19,10 @@ def confusion_matrix_and_report(X, y, pipeline, label_map):
     st.code(classification_report(y, prediction, target_names=label_map), "\n")
 
 
-# code copied from "Modeling and Evaluation" notebooks
 def clf_performance(X_train, y_train, X_test, y_test, pipeline, label_map):
+    """
+    Applies confusion matrix to Train and Test sets
+    """
     st.info("Train Set")
     confusion_matrix_and_report(X_train, y_train, pipeline, label_map)
 
