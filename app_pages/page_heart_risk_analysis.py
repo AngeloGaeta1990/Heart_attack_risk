@@ -133,7 +133,7 @@ def DrawInputsWidgets():
         feature = "RestingBP"
         st_widget = st.number_input(
             label=feature,
-            min_value=0,
+            min_value=60,
             max_value=200,
             value=int(df[feature].median()),
             step=10
@@ -144,7 +144,7 @@ def DrawInputsWidgets():
         feature = "Cholesterol"
         st_widget = st.number_input(
             label=feature,
-            min_value=0,
+            min_value=50,
             max_value=700,
             value=int(df[feature].median()),
             step=10
@@ -174,7 +174,7 @@ def DrawInputsWidgets():
         feature = "MaxHR"
         st_widget = st.number_input(
             label=feature,
-            min_value=0,
+            min_value=50,
             max_value=300,
             value=int(df[feature].median()),
             step=1

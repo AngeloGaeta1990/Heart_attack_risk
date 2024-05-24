@@ -26,6 +26,7 @@ Live link to [Myocardial infarction Risk Analysis](https://heart-attack-risk-10d
 - [Testing](#testing)
     - [Bug and Fixes](#bugs-and-fixes)
     - [Manual Testing](#manual-testing)
+    - [Validators](#validators)
 
 ---
 ## Dataset
@@ -349,11 +350,35 @@ I designed the dashboard using streamlit, and it includes fours different pages:
 
 ### Manual Testing
 
+| Streamlit Page                          | Test                                              | Result                                  |
+|-----------------------------------------|---------------------------------------------------|-----------------------------------------|
+| Myocardial infarction correlation study | Inspect dataset checkbox                         | Dataset displays correctly              |
+| Myocardial infarction correlation study | Myocardial infarction risk per variable checkbox  | Plots display correctly                 |
+| Myocardial infarction correlation study | Parallel plot checkbox                            | Parallel plot displays correctly        |
+| Myocardial infarction risk analysis     | Run default data                                  | Prediction displays correctly           |
+| Myocardial infarction correlation study | Age 0                                             | Prediction displays correctly           |
+| Myocardial infarction correlation study | Age -4                                            | Value must be >= 0                      |
+| Myocardial infarction correlation study | Age 300                                           | Value must be <= 200                    |
+| Myocardial infarction correlation study | RestingBP 0                                       | Value must be >= 60                     |
+| Myocardial infarction correlation study | RestingBP 500                                     | Value must be <= 200                    |
+| Myocardial infarction correlation study | Cholesterol -10                                   | Value must be >= 50                     |
+| Myocardial infarction correlation study | Cholesterol 800                                   | Value must be <= 700                    |
+| Myocardial infarction correlation study | MaxHR 30                                          | Value must be >= 30                     |
+| Myocardial infarction correlation study | MaxHR 500                                         | Value must be <= 300                    |
+| Myocardial infarction correlation study | Old peak -10                                      | Value must be >= -4                     |
+| Myocardial infarction correlation study | Old peak 100                                      | Value must be <= 8                      |
+| Myocardial infarction correlation study | All Categorical values                            | Categorical values show up correctly    |
+| Myocardial infarction correlation study | Default Low risk values*                          | 86.7% Low risk predicted                |
+| Myocardial infarction correlation study | Default High risk values*                         | 90.3% High risk predicted               |
+| Myocardial infarction model evaluation  | Feature importance checkbox                       | Feature importance shows up correctly   |
+| Myocardial infarction model evaluation  | ROC curve analysis checkbox                       | ROC curve analysis shows up correctly   |
 
 
+*Default low risk values: Age:35, Sex M, ChestPainType ASY, RestingBP 90, Cholesterol 100, FastingBS 0, RestingECG Normal, MaxHR 130, 
+ExerciseAngina N, Oldpeak 0, ST_slope, Down
+
+*Default high risk values: Age:75, Sex F, ChestPainType ATA, RestingBP 140, Cholesterol 180, FastingBS , RestingECG ST, MaxHR 180, 
+ExerciseAngina Y, Oldpeak 8, ST_slope, Flat
 
 
-
-
-
-
+## Validators
