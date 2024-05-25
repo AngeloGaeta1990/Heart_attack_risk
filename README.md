@@ -549,6 +549,6 @@ The project has been implemented based on the [Churnometer project](https://gith
 Great thanks to:
 - [Code institute](https://codeinstitute.net/) for providing training material
 - [Chatgpt](https://openai.com/blog/chatgpt) for assisting in troubleshooting and proofreading
-- [GitPod] (https://www.gitpod.io/) IDE used to develop this project
+- [GitPod](https://www.gitpod.io/) IDE used to develop this project
 - [Github](https://github.com/): Platform used for version control.
 - My partner for continuous support and assistance
