@@ -27,6 +27,10 @@ Live link to [Myocardial infarction Risk Analysis](https://heart-attack-risk-10d
     - [Bug and Fixes](#bugs-and-fixes)
     - [Manual Testing](#manual-testing)
     - [Validators](#validators)
+        - [Python](#python)
+- [Deployment](#deployment)
+- [Packages & Technologies](#packages--technologies)
+- [Credits](#credits)
 
 ---
 ## Dataset
@@ -194,7 +198,7 @@ Furthermore, I also plotted the ROC curve to measure the difference between the 
 
 ![ROC curve plot](/docs/images/roc_curve_plot.png)
 
-Taken together, the results suggest that one of the two business requirements was addressed (see[Business requirements](#business-requirements)), as the precision is >80% on both the test and train sets. Additionally, the ROC curve highlighted a significant difference in the true and false positive rates compared to a random sampler.
+Taken together, the results suggest that one of the two business requirements was addressed (see [Business requirements](#business-requirements)), as the precision is >80% on both the test and train sets. Additionally, the ROC curve highlighted a significant difference in the true and false positive rates compared to a random sampler.
 
 ---
 
@@ -328,9 +332,9 @@ I designed the dashboard using streamlit, and it includes fours different pages:
 
    **Solution**: Downgraded to `Python 3.11.9` and downgraded `ydata-profiling` to `4.6.4`.
 
-1. **Error**:  In Streamlit, the parallel plot was showing only black lines, and the low and high-risk values were not visible..
+1. **Error**:  In Streamlit, the parallel plot was showing only black lines, and the low and high-risk values were not visible.
 
-   **Cause**: The dataset used as input did not include target variable values; for the target variables, all values were NA..
+   **Cause**: The dataset used as input did not include target variable values; for the target variables, all values were NA.
 
    **Solution**: I updated the dataset used as input so that the target values were listed as 0 and 1 as in the original dataset.
 
@@ -380,5 +384,149 @@ ExerciseAngina N, Oldpeak 0, ST_slope, Down
 *Default high risk values: Age:75, Sex F, ChestPainType ATA, RestingBP 140, Cholesterol 180, FastingBS , RestingECG ST, MaxHR 180, 
 ExerciseAngina Y, Oldpeak 8, ST_slope, Flat
 
-
+---
 ## Validators
+---
+
+### Python
+
+I used the AutoPEP8 and Flake8 extensions in Gitpod to ensure that the Python code adheres to PEP8 rules, and no errors are reported in any `.py` file. 
+However, when linting Jupyter notebooks using the `flake8-nb` package, I encountered the following warnings:
+
+   ```bash
+   jupyer_notebooks/DataCollection.ipynb#In[6]:2:2: E999 SyntaxError: invalid syntax
+   ```
+The linter is having trouble recognizing the cell magic `!`, but the code still adheres to PEP8 rules."
+
+---
+
+## Deployment
+
+---
+
+To deploy the repository on Heroku follow these steps:
+
+## Create repository
+
+To create a new repository, use the following link [Template to crete a new repository](https://github.com/Code-Institute-Org/ci-full-template).
+Then, clone the repository
+
+## Cloning a GitHub Repository
+
+1. Open your terminal or command prompt on your local machine.
+
+1. Navigate to the directory where you want to clone the repository using the `cd` command.
+
+   ```bash
+   cd path/to/your/directory
+   ```
+
+1. Go to the GitHub repository you want to clone.
+1. Click on the "Code" button on the repository page.
+1. Copy the URL provided (either HTTPS or SSH).
+1. In your terminal, use the git clone command followed by the copied URL.
+
+    For HTTPS:
+
+    ```bash
+    git clone https://github.com/username/repository.git
+    ```
+
+    For SSH
+
+    ```bash
+    git clone git@github.com:username/repository.git
+    ```
+
+    Replace the URL with the one you copied.
+
+1. Press Enter, and Git will clone the repository to your local machine.
+
+## Creating project and app
+
+1. Create a virtual environment:
+
+    ```bash
+    python -m venv .venv
+    ```
+1. Install packages
+
+     ```bash
+    pip install -r requirements.txt
+    ```
+
+### Create Heroku App and connect your repository
+
+1. Create a file named Procfile in the project repository and add the following content:
+
+  ```bash
+  web: sh setup.sh && streamlit run app.py --server.port $PORT
+  ```
+
+1. Create a file named `setup.sh` and add:
+
+    ```bash
+    mkdir -p ~/.streamlit/
+    echo "\
+    [server]\n\
+    headless = true\n\
+    port = $PORT\n\
+    enableCORS = false\n\
+    \n\
+    " > ~/.streamlit/config.t
+
+    ```
+
+1. Create a file name `runtime.txt` and add the Python version 3.11.9
+   
+   ```
+   python-3.11.9
+   ```
+1. On the Heroku dashboard select "Create a new app"
+1. On Heroku, select the app you created.
+1. Go to the "Settings" tab.
+1. Click "Reveal Config Vars".
+1. Click "Add".
+1. Add the key `PORT` with the value `8501`.
+1. Click "Open app".
+
+---
+
+## Packages & Technologies
+
+The main packages and technologies used in the project are:
+
+- [Github](https://github.com/): Platform used for version control.
+
+- [Gitpod](https://www.gitpod.io/): IDE used to implement the project.
+
+- [Heoku](https://www.heroku.com): Platform for cloud deployment.
+
+- [Kaggle 1.6.12](https://pypi.org/project/kaggle/): Tool to download datasets from Kaggle.
+
+- [Matplotlib 3.8.4](https://matplotlib.org/): Library for data visualization.
+
+- [Numpy 1.25.2](https://numpy.org/): Library for main mathematical operations.
+
+- [Pandas 1.5.3](https://pandas.pydata.org/): Library for data manipulation using DataFrames.
+
+- [Plotly 5.22.0](https://plotly.com/): Library for generating plots.
+
+- [Ppscore 1.3.0](https://pypi.org/project/ppscore/): Tool for Predictive Power Score (PPS) evaluation.
+
+- [Python 3.11.9](https://www.python.org/downloads/): Main programming language used in the project.
+
+- [Scikit-learn 1.4.2](https://scikit-learn.org/stable/index.html): Library for machine learning model selection and creation.
+
+- [Scipy 1.11.4](https://scipy.org/): Library for statistical operations.
+
+- [Seaborn 0.12.2](https://seaborn.pydata.org/): Library for data visualization.
+
+- [Streamlit 1.34.0](https://streamlit.io/): Tool for generating dashboards.
+
+- [Ydata-profiling 4.6.4](https://pypi.org/project/ydata-profiling/): Library for data exploration.
+
+---
+
+## Credits
+
