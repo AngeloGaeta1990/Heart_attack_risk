@@ -17,6 +17,7 @@ Live link to [Myocardial infarction Risk Analysis](https://heart-attack-risk-10d
 - [Business requirements](#business-requirements)
 - [Hypothesys](#Hypothesis)
 - [User stories](#user-stories)
+- [Future developments](#future-developments)
 - [ML model development](#ml-model-development)
     - [Data Cleaning and Feature Engeenering](#data-cleaning-and-feature-engeenering)
     - [ML pipeline](#ml-pipeline)
@@ -136,6 +137,17 @@ Below, I added the user stories I used to build the project:
 - As a user, I can see which are the pipeline steps, so that I can have further insights on how the model was built.
 
 -----
+
+## Future developments
+
+Future development includes :
+
+ - Create models using a neural network approach
+ - Develop an API system to automate the risk evaluation
+ - Create a models using Features available to patients and not only to practioners
+ - Create a models using Features available on Smartwatch, so that smarwatches can send a notifcation if there is an high risk of myocardial infarction
+
+---
 ## ML model development
 
 The ML model I implemented consists of two pipelines: one for data cleaning and feature engineering, and the second for feature selection and model building.
@@ -502,6 +514,8 @@ The main packages and technologies used in the project are:
 
 - [Heoku](https://www.heroku.com): Platform for cloud deployment.
 
+- [Jupiter Noteboos](https://jupyter.org/): Development environment to create notebooks.
+
 - [Kaggle 1.6.12](https://pypi.org/project/kaggle/): Tool to download datasets from Kaggle.
 
 - [Matplotlib 3.8.4](https://matplotlib.org/): Library for data visualization.
@@ -530,3 +544,11 @@ The main packages and technologies used in the project are:
 
 ## Credits
 
+The project has been implemented based on the [Churnometer project](https://github.com/Code-Institute-Solutions/churnometer)
+
+Great thanks to:
+- [Code institute](https://codeinstitute.net/) for providing training material
+- [Chatgpt](https://openai.com/blog/chatgpt) for assisting in troubleshooting and proofreading
+- [GitPod] (https://www.gitpod.io/) IDE used to develop this project
+- [Github](https://github.com/): Platform used for version control.
+- My partner for continuous support and assistance
