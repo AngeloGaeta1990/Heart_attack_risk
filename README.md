@@ -21,7 +21,11 @@ Live link to [Myocardial infarction Risk Analysis](https://heart-attack-risk-10d
 - [ML model development](#ml-model-development)
     - [Data Cleaning and Feature Engeenering](#data-cleaning-and-feature-engeenering)
     - [ML pipeline](#ml-pipeline)
-        - [ML pipeline evaluation](#ml-pipeline-evaluation)
+    - [ML pipeline evaluation](#ml-pipeline-evaluation)
+- [Neural network](#neural-network)
+    -[Data preparation](#data-preparation)
+    -[Neural network model](#neural-network-model)
+    -[Neural network evaluation](#neural-network-evaluation)
 - [Correlation study](#correlation-study)
 - [Dashboard design](#dashboard-design)
 - [Testing](#testing)
@@ -142,7 +146,6 @@ Below, I added the user stories I used to build the project:
 
 Future development includes :
 
- - Create models using a neural network approach
  - Develop an API system to automate the risk evaluation
  - Create a models using Features available to patients and not only to practioners
  - Create a models using Features available on Smartwatch, so that smarwatches can send a notifcation if there is an high risk of myocardial infarction
@@ -193,24 +196,62 @@ The ML pipeline instead consist of the following steps: **StandardScaler**, **Fe
 
 Logistic Regression resulted in the estimator with the highest mean score. Therefore, I proceeded with hyperparameterization and model fitting. I divided the dataset into train (80% of the data) and test (20% of the data) sets.
 
-#### ML pipeline evaluation
+### ML pipeline evaluation
 
 To evaluate the pipeline, I used the confusion matrix:
 
  - **Train Set**
 
-    ![Train set table of truth](/docs/images/table_of_truth_train.png)
+    ![Train set confusion matrix](/docs/images/confusion_matrix_train.png)
 
 
  - **Test Set**
 
-    ![Test set table of truth](/docs/images/table_of_truth_test.png)
+    ![Test set confusion matrix](/docs/images/confusion_matrix_test.png)
 
 Furthermore, I also plotted the ROC curve to measure the difference between the method I implemented and a random sampler.
 
 ![ROC curve plot](/docs/images/roc_curve_plot.png)
 
 Taken together, the results suggest that one of the two business requirements was addressed (see [Business requirements](#business-requirements)), as the precision is >80% on both the test and train sets. Additionally, the ROC curve highlighted a significant difference in the true and false positive rates compared to a random sampler.
+
+---
+
+## Neural network 
+
+I decided to also utilize a neural network approach to assess if I could achieve higher precision and recall.
+
+### Data preparation
+
+For data preparation, 20% of the training dataset was utilized as the validation dataset to evaluate the model's performance. The OneHotEncoder was used to convert each categorical variable into a binary categorical variable. Additionally, the Random Sample Imputer was applied to the cholesterol feature after converting all zeros to NA. Lastly, the StandardScaler was employed to ensure that all variables are on the same scale.
+
+
+### Neural network model
+
+I constructed a neural network model using TensorFlow. It defines multiple dense (fully connected) layers with ReLU activation functions. The final layer has a sigmoid activation function, suitable for binary classification tasks. Dropout layers are added after each dense layer to prevent overfitting. The model is compiled with binary cross-entropy loss and the Adam optimizer, with precision as the evaluation metric.
+
+
+### Neural network evaluation
+
+The following plots highlight how the loss and precision follow similar patterns for both the training and validation sets, indicating no signs of underfitting or overfitting:
+
+
+![Loss plot](/docs/images/loss_plot.png)
+
+![Precision plot](/docs/images/precision_plot.png)
+
+
+Furthermore, the confusion matrix shows similar results when compared to the traditional ML model:
+
+
+![Neural network confusion matrix on train set](/docs/images/confusion_matrix_neural_network_train.png)
+
+![Neural network confusion matrix on validation set](/docs/images/confusion_matrix_neural_network_validation.png)
+
+![Neural network confusion matrix on test set](/docs/images/confusion_matrix_neural_network_test.png)
+
+
+Since I didn't observe significant improvements compared to the traditional ML model, I decided to proceed using the ML model in Streamlit.
 
 ---
 
@@ -361,6 +402,13 @@ I designed the dashboard using streamlit, and it includes fours different pages:
    **Cause**: Variables to plot the ROC curve were not provided in the correct order.
 
    **Solution**:  Provided the variables in the correct order in the ROC curve function.
+
+1. **Error**: Deployment on Heroku failed with the following error: Compiled slug size: 1000.7M is too large (max is 500M).
+
+   **Cause**: The `Tensorflow` library has a size of approximately 500 MB, exceeding the limit for Heroku deployment.
+   
+   **Solution**: Remove the `Tensorflow` library from requirements.
+
 
 ---
 
@@ -537,6 +585,8 @@ The main packages and technologies used in the project are:
 - [Seaborn 0.12.2](https://seaborn.pydata.org/): Library for data visualization.
 
 - [Streamlit 1.34.0](https://streamlit.io/): Tool for generating dashboards.
+
+- [Tensorflow 2.16.1](https://www.tensorflow.org/): Tool to create neural network model.
 
 - [Ydata-profiling 4.6.4](https://pypi.org/project/ydata-profiling/): Library for data exploration.
 
