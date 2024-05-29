@@ -1,4 +1,4 @@
-### Myocardial infarction Risk Analysis
+### Myocardial Infarction Risk Analysis
 ---
 In an era marked by the increasing prevalence of cardiovascular diseases (CVDs), understanding the factors contributing to heart health and risk has become paramount. Cardiovascular diseases, encompassing conditions such as coronary artery disease, stroke, and hypertension, remain the leading cause of mortality worldwide. With lifestyle choices, genetic predispositions, and environmental factors interplaying in complex ways, the need for precise risk assessment models becomes evident.
 
@@ -6,7 +6,7 @@ This heart risk analysis project aims to delve into the intricate web of variabl
 
 The primary objective is to provide a method capable of predicting, with at least 80% precision, which patients are at high risk. Subsequently, healthcare practitioners can proactively reach out to patients identified as high risk, offering them preventive therapies and interventions.
 
-Live link to [Myocardial infarction Risk Analysis](https://heart-attack-risk-10ddd79e68a6.herokuapp.com/)
+Live link to [Myocardial Infarction Risk Analysis](https://heart-attack-risk-10ddd79e68a6.herokuapp.com/)
 ![Heart Risk Analysis](docs/images/live_website_page.png)
 
 ---
@@ -16,7 +16,7 @@ Live link to [Myocardial infarction Risk Analysis](https://heart-attack-risk-10d
 - [Dataset](#dataset)
 - [Business requirements](#business-requirements)
 - [Hypothesys](#Hypothesis)
-- [User stories](#user-stories)
+- [Agile development](#agile-developmemt)
 - [Future developments](#future-developments)
 - [ML model development](#ml-model-development)
     - [Data Cleaning and Feature Engeenering](#data-cleaning-and-feature-engeenering)
@@ -124,21 +124,29 @@ In this project, the null hypothesis (H0) is the following: The database feature
 
 ---
 
-## User stories
+## Agile developmemt
 
-Below, I added the user stories I used to build the project: 
+For this project, I adopted an Agile approach. The project was divided into three sprints, and the user stories were labeled using the MoSCoW method. Below, I list the user stories grouped by sprint:
 
+- Sprint 1 15/04/2024 - 29/04/2024
+    - As a **Developer** I can **import the data into Jupiter Notebook** so that **I can process the dataset**.
+    - As a **Developer** I can **have an overview of the dataset** so that **I can see features and target distributions and histograms**.
+    - As a **Developer** I can **understand which variable correlates the most with myocardial infarction** so that **I can meet one of the business requirements**.
+    - As a **Developer** I can **check if there are missing data in the dataset** so that **I can handle them**.
 
- - As a user, I can get a measure of the myocardial infarction risk, 
- so that I can provide therapies to patient at high risk of myocardial infarction.
+- Sprint 2 29/04/2024 - 13/05/2024
+    - As a **Developer** I can **have a dataset containing engineered features** so that **ML pipeline can be applied**.
+    - As a **Developer** I can **run an ML pipeline** so that **I can predict myocardial infarction**.
+    - As a **Developer** I can **assess the ML pipeline** so that **I can improve the model if business requirements are not met**.
+    - As a **User** I can **visualize Streamlet's first page** so that **I can have an overview of the project aim and jargon**.
+    - As a **Developer** I can **deploy my project on Heroku** so that **Users can visualize it and provide feedback**.
+    - As a **User** I can **visualize the correlation page on Streamlit** so that **I can understand which features correlate the most with myocardial infarction risk**.
+    - As a **User** I can **Insert patient data** so that **I can verify if the patient is at high risk of myocardial infarction**.
+    - As a **User** I can **visualize pipeline performances** so that **I can evaluate if pipeline outputs can be trusted**.
 
- - As a user, I can add patient data, so that I can get mycordial infarction risk for each patient.
-
- - As user, I can see which are the variables correlating the most with myocardial infarction risk, so that I can study if there is any biological correlation.
-
- - As a user, I can see how reliable is the ML model so that I can get an estimate of false posivites and false negatives.
-
-- As a user, I can see which are the pipeline steps, so that I can have further insights on how the model was built.
+- Sprint 3 13/05/2024 - 27/05/2024
+    - As a **User** I can **get details of the project and ML pipeline implementation** so that **I can decide if to adopt it or not**
+    - As a **Developer** I can **compare the regular ML approach to a neural network approach** so that **I can understand which one performs better**
 
 -----
 
@@ -158,7 +166,6 @@ The ML model I implemented consists of two pipelines: one for data cleaning and 
 ### Data Cleaning and Feature Engeenering
 
 The data cleaning and feature engineering pipeline consists of the following steps: RandomSampleImputer, OrdinalCategoricalEncoder, and Winsorizer.
-
 
 **RandomSampleInputer**. None of the features in the dataset had missing values. However, upon inspection, I noticed that approximately 20% of the values for the cholesterol feature were zeros.
 
